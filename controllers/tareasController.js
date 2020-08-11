@@ -13,13 +13,14 @@ exports.agregarTarea = async (req, res, next) => {
     });
 
     // Leer los valores de la tarea
-    const { definicion } = req.body;
+    const { definicion, fechafinal } = req.body;
 
-    // Insertar en la base de datos la nueva tarea
+    // Insertar en la base de datos la nueva tarea    
     await Tarea.create({
       definicion,
       estado: 0,
       fecha: new Date(),
+      fechafinal,
       proyectoId: proyecto.id,
     });
 
@@ -77,7 +78,6 @@ exports.eliminarTarea = async (req, res, next) => {
     res.status(401).send("Hubo un problema al momento de eliminar la tarea");
   }
 };
-
 
 exports.formularioModificarTarea = async (req, res, next) => {  
   const { id } = req.params;

@@ -11,38 +11,45 @@
     <label for="nombre">Descripción</label>
     <input type="text" class="form-control" id="definicion" name="definicion" placeholder="Define la tarea" required>
   </div>
+  <div class="form-group">
+    <label for="nombre">Fecha final</label>
+    <input type="date" id="start" name="fechafinal" value="2020-07-22" min="2020-01-01" max="2021-12-31">
+  </div>
   <button type="submit" class="btn btn-primary">Agregar</button>
 </form>
 
 {{!-- Lista de tareas existentes --}}
 {{#if tareas}}
-    <ul id="listado-tareas">
-    {{#each tareas}}
-          <li data-tarea={{id}}>
-            <p>
-              {{definicion}}
-              <div class="togglebutton">
-                <label>
-                  {{#if estado}}
-                    <input type="checkbox" checked>
-                  {{else}}
-                    <input type="checkbox">
-                  {{/if}}
-                  <span class="toggle"></span>
-                </label>
-              </div>
-              <button class="btn btn-fab btn-round btn-primary">
-                <i class="fa fa-trash"></i>
-              </button>
-              {{!-- <button class="btn btn-fab btn-round btn-primary"> --}}
-                <a class="btn btn-fab btn-round btn-primary" href="/actualizar_tarea/{{id}}"><i class="fas fa-edit"></i></a>
-              {{!-- </button> --}}
-            </p>
-          </li>
-    {{/each}}
-    </ul>
-{{else}}
-    <div class="text-center mt-3">
-      <h4>Este proyecto aún no tiene tareas. ¡Agrega alguna!</h4>
+<ul id="listado-tareas">
+  {{#each tareas}}
+  <li data-tarea={{id}}>
+    {{#if retrasada}}
+    <p style="color:red;">Tarea retrasada</p>
+    {{/if}}
+    <p>
+      {{definicion}}
+    <div class="togglebutton">
+      <label>
+        {{#if estado}}
+        <input type="checkbox" checked>
+        {{else}}
+        <input type="checkbox">
+        {{/if}}
+        <span class="toggle"></span>
+      </label>
     </div>
+    <button class="btn btn-fab btn-round btn-primary">
+      <i class="fa fa-trash"></i>
+    </button>
+    {{!-- <button class="btn btn-fab btn-round btn-primary"> --}}
+    <a class="btn btn-fab btn-round btn-primary" href="/actualizar_tarea/{{id}}"><i class="fas fa-edit"></i></a>
+    {{!-- </button> --}}
+    </p>
+  </li>
+  {{/each}}
+</ul>
+{{else}}
+<div class="text-center mt-3">
+  <h4>Este proyecto aún no tiene tareas. ¡Agrega alguna!</h4>
+</div>
 {{/if}}
