@@ -136,5 +136,18 @@ module.exports = function () {
     authController.actualizarPassword
   );
 
+  routes.get(
+    "/actualizar_tarea/:id",    
+    authController.usuarioAutenticado,
+    tareasController.formularioModificarTarea
+  );
+
+  routes.post(
+    "/actualizar_tarea/:id",
+    body("definicion").trim().notEmpty().escape(),
+    authController.usuarioAutenticado,
+    tareasController.modificarTarea
+  );
+
   return routes;
 };
