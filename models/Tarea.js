@@ -15,6 +15,8 @@ const Tarea = db.define("tarea", {
   definicion: Sequelize.STRING,
   estado: Sequelize.BOOLEAN,
   fecha: Sequelize.DATE,
+  fechaFinal: Sequelize.DATE,
+  retrasada: Sequelize.BOOLEAN,
 });
 Tarea.belongsTo(Proyecto);
 
