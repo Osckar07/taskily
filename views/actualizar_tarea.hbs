@@ -1,0 +1,12 @@
+<h1 class="mt-3">Actualizar tarea</h1>
+
+{{!-- Mostrar los mensajes en caso de existir --}}
+{{>ourMessages}}
+
+<form method="POST" action="/actualizar_tarea/{{tarea.id}}">
+  <div class="form-group">      
+    <label for="definicion">Cambia la descripcion de la tarea</label>
+    <input type="text" class="form-control" value="{{definicion}}" id="definicion" name="definicion">
+  </div>  
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
