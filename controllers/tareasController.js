@@ -77,3 +77,76 @@ exports.eliminarTarea = async (req, res, next) => {
     res.status(401).send("Hubo un problema al momento de eliminar la tarea");
   }
 };
+
+
+exports.formularioModificarTarea = async (req, res, next) => {  
+  const { id } = req.params;
+
+  try {
+    const tarea = await Tarea.findOne({
+      where: {
+        id,
+      },
+    });
+
+    res.render("actualizar_tarea", {      
+      tarea: tarea.dataValues,            
+    });
+  } catch (error) {
+    res.status(401).send("Hubo un problema al momento de actualizar la tarea");
+  }
+};
+
+// Modifica una tarea basado en su id
+exports.modificarTarea = async (req, res, next) => {
+  // Obtener el id de la tarea mediante query o params
+  const { id } = req.params;
+
+  const { definicion} = req.body
+
+  try {
+    await Tarea.update({
+      definicion
+    },
+    {
+      where: {
+        id,
+      },
+    });
+    const tarea = await Tarea.findOne({
+      where:{
+        id,
+      }
+    });
+    const proyecto = await Proyecto.findOne({
+      where:{
+        id: tarea.proyectoId
+      }
+    }); 
+
+    const tareas = await Tarea.findAll({
+      where:{
+        proyectoId: proyecto.id,
+      }
+    });
+    const tareasArray = [];
+
+    tareas.map((tarea) => {
+      tareasArray.push({
+        id: tarea.dataValues.id,
+        definicion: tarea.dataValues.definicion,
+        estado: tarea.dataValues.estado,
+        fecha: tarea.dataValues.fecha,
+      });
+    });
+
+    res.render("tareas", {      
+      tarea: tarea.dataValues, 
+      proyecto: proyecto.dataValues,      
+      tareas: tareasArray,     
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(401).send("Hubo un problema al momento de actualizar la tarea");
+  }
+};
